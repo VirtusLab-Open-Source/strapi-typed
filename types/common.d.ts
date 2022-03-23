@@ -6,10 +6,6 @@ export type KeyValueSet<T> = {
     [key: string]: T | any
 };
 
-export type Context = {
-    strapi: IStrapi
-}
-
 export type Method = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
 
 export type Map<Type> = {

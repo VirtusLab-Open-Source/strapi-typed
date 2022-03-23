@@ -134,3 +134,8 @@ export type StrapiRouteConfig = {
 export type StrapiAdminUser = any;
 
 export type StrapiUser = any;
+
+export type StrapiContext = {
+    strapi: IStrapi
+}
+
