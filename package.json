@@ -1,0 +1,43 @@
+{
+  "name": "strapi-typed",
+  "version": "2.1.0-beta.1",
+  "description": "Strapi v4 - Types & utilities",
+  "types": "./types/index.d.ts",
+  "scripts": {
+    "publish:latest": "cd build && npm publish --tag latest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/VirtusLab-Open-Source/strapi-typed"
+  },
+  "dependencies": {
+    "@strapi/plugin-graphql": "^4.1.2",
+    "@strapi/utils": "^4.1.2",
+    "bad-words": "^3.0.4"
+  },
+  "devDependencies": {
+    "typescript": "^4.6.2"
+  },
+  "peerDependencies": {
+    "@strapi/strapi": "4.x"
+  },
+  "author": {
+    "name": "VirtusLab",
+    "email": "strapi@virtuslab.com",
+    "url": "https://virtuslab.com"
+  },
+  "maintainers": [
+    {
+      "name": "VirtusLab // Mateusz Ziarko",
+      "email": "mziarko@virtuslab.com",
+      "url": "https://virtuslab.com"
+    }
+  ],
+  "keywords": [
+    "strapi",
+    "types",
+    "interfaces",
+    "typescript"
+  ],
+  "license": "MIT"
+}
