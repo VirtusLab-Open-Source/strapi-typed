@@ -1,4 +1,5 @@
 import { Map } from "./common"
+import { StrapiContentTypeSchema } from "./contentType"
 
 export interface IStrapi {
     config: StrapiConfigContainer
@@ -20,7 +21,7 @@ export interface IStrapi {
     api(): Map<StrapiApi>
     api(name: string): StrapiApi
     auth(): StrapiAuth
-    getModel(uid: string): StrapiContentType
+    getModel<T>(uid: string): StrapiContentType<T>
     query<T>(uid: string): StrapiDBQuery<T>
     store(props: StrapiStoreQuery): StrapiStore
 
@@ -55,7 +56,7 @@ export interface IStrapi {
 export type StrapiService = any;
 export type StrapiController = any;
 export type StrapiMiddleware = Object;
-export type StrapiContentType = Object;
+export type StrapiContentType<T extends StrapiContentTypeSchema> = T | Object;
 export type StrapiPolicy = Object;
 export type StrapiHook = Object;
 export type StrapiApi = Object;
@@ -91,7 +92,7 @@ export type StrapiDB = {
 };
 
 export type StrapiDBQuery<T> = {
-    findOne(args: StrapiDBQueryArgs): Promise<T>
+    findOne(args: number | string | StrapiDBQueryArgs): Promise<T>
     findMany(args: StrapiDBQueryArgs): Promise<Array<T>>
     findWithCount(args: StrapiDBQueryArgs): Promise<[items: Array<T>, count: number]>
     create(args: StrapiDBQueryArgs): Promise<T>
