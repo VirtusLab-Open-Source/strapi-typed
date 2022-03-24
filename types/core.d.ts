@@ -4,19 +4,19 @@ import { StrapiContentTypeSchema } from "./contentType"
 export interface IStrapi {
     config: StrapiConfigContainer
     EE(): Function
-    services(): Map<StrapiService>
+    get services(): Map<StrapiService>
     service(uid: string): StrapiService
-    controllers(): Map<StrapiController>
+    get controllers(): Map<StrapiController>
     controller(uid: string): StrapiController
-    contentTypes(): Map<StrapiContentType>
+    get contentTypes(): Map<StrapiContentType>
     contentType(name: string): StrapiContentType
-    policies(): Map<StrapiPolicy>
+    get policies(): Map<StrapiPolicy>
     policy(name: string): StrapiPolicy
-    middlewares(): Map<StrapiMiddleware>
+    get middlewares(): Map<StrapiMiddleware>
     middleware(name: string): StrapiMiddleware
-    plugins(): Map<StrapiPlugin>
+    get plugins(): Map<StrapiPlugin>
     plugin(name: string): StrapiPlugin
-    hooks(): Map<StrapiHook>
+    get hooks(): Map<StrapiHook>
     hook(name: string): StrapiHook
     api(): Map<StrapiApi>
     api(name: string): StrapiApi
@@ -24,6 +24,7 @@ export interface IStrapi {
     getModel<T>(uid: string): StrapiContentType<T>
     query<T>(uid: string): StrapiDBQuery<T>
     store(props: StrapiStoreQuery): StrapiStore
+    get components(): Map<any>
 
     start: Function
     destroy: Function
@@ -62,10 +63,13 @@ export type StrapiHook = Object;
 export type StrapiApi = Object;
 export type StrapiAuth = Object;
 export type StrapiPlugin = {
-    service(name: string): StrapiService
+    get services(): Map<StrapiService>
+    service(uid: string): StrapiService
+    get controllers(): Map<StrapiController>
     controller(name: string): StrapiController
-    config: StrapiConfigContainer
-    contentTypes: Map<any>
+    get contentTypes(): Map<any>
+    contentType(name: string): StrapiContentType
+    config(name: string): any
 };
 
 export type StrapiPluginConfig<Type> = {
@@ -93,7 +97,7 @@ export type StrapiDB = {
 
 export type StrapiDBQuery<T> = {
     findOne(args: number | string | StrapiDBQueryArgs): Promise<T>
-    findMany(args: StrapiDBQueryArgs): Promise<Array<T>>
+    findMany(args?: StrapiDBQueryArgs): Promise<Array<T>>
     findWithCount(args: StrapiDBQueryArgs): Promise<[items: Array<T>, count: number]>
     create(args: StrapiDBQueryArgs): Promise<T>
     createMany(args: StrapiDBQueryArgs): Promise<Array<T>>
@@ -101,7 +105,7 @@ export type StrapiDBQuery<T> = {
     updateMany(args: StrapiDBQueryArgs): Promise<Array<T>>
     delete(args: StrapiDBQueryArgs): Promise<T>
     deleteMany(args: StrapiDBQueryArgs): Promise<Array<T>>
-    count(args: StrapiDBQueryArgs): number
+    count(args?: StrapiDBQueryArgs): number
 };
 
 export type StrapiDBQueryArgs = {
