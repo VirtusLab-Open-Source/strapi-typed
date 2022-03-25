@@ -1,4 +1,17 @@
-import { Primitive } from "./common";
+import { Map, Primitive } from "./common";
+
+export type StrapiRequestContext<TBody = {}, TQuery = {}> = {
+    request: StrapiRequest<TBody>
+    query: TQuery
+    params: Map<string | number>
+    
+    send: Function
+    throw: Function
+}
+
+export type StrapiRequest<TBody extends Object> = {
+    body?: TBody
+};
 
 export type StrapiPagination = {
     page?: number
