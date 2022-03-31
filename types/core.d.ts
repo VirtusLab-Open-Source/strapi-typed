@@ -1,30 +1,30 @@
-import { Map } from "./common"
+import { StringMap } from "./common"
 import { StrapiContentTypeSchema } from "./contentType"
 
 export interface IStrapi {
     config: StrapiConfigContainer
     EE(): Function
-    get services(): Map<StrapiService>
+    get services(): StringMap<StrapiService>
     service(uid: string): StrapiService
-    get controllers(): Map<StrapiController>
+    get controllers(): StringMap<StrapiController>
     controller(uid: string): StrapiController
-    get contentTypes(): Map<StrapiContentType>
+    get contentTypes(): StringMap<StrapiContentType>
     contentType(name: string): StrapiContentType
-    get policies(): Map<StrapiPolicy>
+    get policies(): StringMap<StrapiPolicy>
     policy(name: string): StrapiPolicy
-    get middlewares(): Map<StrapiMiddleware>
+    get middlewares(): StringMap<StrapiMiddleware>
     middleware(name: string): StrapiMiddleware
-    get plugins(): Map<StrapiPlugin>
+    get plugins(): StringMap<StrapiPlugin>
     plugin(name: string): StrapiPlugin
-    get hooks(): Map<StrapiHook>
+    get hooks(): StringMap<StrapiHook>
     hook(name: string): StrapiHook
-    api(): Map<StrapiApi>
+    api(): StringMap<StrapiApi>
     api(name: string): StrapiApi
     auth(): StrapiAuth
     getModel<T>(uid: string): StrapiContentType<T>
     query<T>(uid: string): StrapiDBQuery<T>
     store(props: StrapiStoreQuery): StrapiStore
-    get components(): Map<any>
+    get components(): StringMap<any>
 
     start: Function
     destroy: Function
@@ -63,11 +63,11 @@ export type StrapiHook = Object;
 export type StrapiApi = Object;
 export type StrapiAuth = Object;
 export type StrapiPlugin = {
-    get services(): Map<StrapiService>
+    get services(): StringMap<StrapiService>
     service(uid: string): StrapiService
-    get controllers(): Map<StrapiController>
+    get controllers(): StringMap<StrapiController>
     controller(name: string): StrapiController
-    get contentTypes(): Map<any>
+    get contentTypes(): StringMap<any>
     contentType(name: string): StrapiContentType
     config(name: string): any
 };
@@ -76,7 +76,7 @@ export type StrapiPluginConfig<Type> = {
     [Property in keyof Type]: Type[Property];
 };
 
-export type StrapiConfigContainer = Map<any> & {
+export type StrapiConfigContainer = StringMap<any> & {
     get: Function
 }
 
@@ -109,7 +109,7 @@ export type StrapiDBQuery<T> = {
 };
 
 export type StrapiDBQueryArgs = {
-    where?: Map<>
+    where?: StringMap<>
     data?: any
     offset?: number
     limit?: number

@@ -1,15 +1,15 @@
-import { Map, Primitive } from "./common";
+import { StringMap, Primitive } from "./common";
 
-export type StrapiRequestContext<TBody = {}, TQuery = {}> = {
+export type StrapiRequestContext<TBody extends {}, TQuery = {}> = {
     request: StrapiRequest<TBody>
     query: TQuery
-    params: Map<string | number>
+    params: StringMap<string | number>
     
     send: Function
     throw: Function
 }
 
-export type StrapiRequest<TBody extends Object> = {
+export type StrapiRequest<TBody extends {}> = {
     body?: TBody
 };
 
