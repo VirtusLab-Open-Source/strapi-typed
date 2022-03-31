@@ -8,8 +8,10 @@ export type KeyValueSet<T> = {
 
 export type Method = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
 
-export type Map<Type> = {
-    [key: string]: Type
+export type StringMap<Type> = Record<string, Type>
+
+export type TypeResult<T extends Object> = {
+[K in keyof T]: T[K];
 };
 
 export type Id = number | string;
