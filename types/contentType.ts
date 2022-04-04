@@ -1,3 +1,1 @@
-export type StrapiContentTypeSchema = {
-
-}
+export type StrapiContentTypeSchema = {};
