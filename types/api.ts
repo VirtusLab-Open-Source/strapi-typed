@@ -1,53 +1,61 @@
-import { StringMap, Primitive } from "./common";
+import { StringMap, Primitive, TypeResult } from "./common";
 
-export type StrapiRequestContext<TBody extends {}, TQuery = {}> = {
-    request: StrapiRequest<TBody>
-    query: TQuery
-    params: StringMap<string | number>
-    
-    send: Function
-    throw: Function
-}
+type SendStrapiContextFunction = (...args: unknown[]) => void;
+
+type ThrowStrapiContextFunction = (...args: unknown[]) => void;
+
+export type StrapiRequestContext<
+  TBody = StringMap<string | number>,
+  TQuery = StringMap<string | number>,
+  TParams = StringMap<string | number>
+> = {
+  request: StrapiRequest<TBody>;
+  query: TQuery;
+  params: TParams;
+  send: SendStrapiContextFunction;
+  throw: ThrowStrapiContextFunction;
+};
 
 export type StrapiRequest<TBody extends {}> = {
-    body?: TBody
+  body?: TBody;
 };
 
 export type StrapiPagination = {
-    page?: number
-    pageSize?: number
-    start?: number
-    limit?: number
-    withCount?: boolean | string
+  page?: number;
+  pageSize?: number;
+  start?: number;
+  limit?: number;
+  withCount?: boolean | string;
 };
 
+export type StrapiResponseMetaPagination = TypeResult<
+  Pick<StrapiPagination, "page" | "pageSize" | "start" | "limit"> & {
+    pageCount?: number;
+    total?: number;
+  }
+>;
+
 export type StrapiResponseMeta = {
-    pagination: Pick<StrapiPagination, 'page' | 'pageSize' |'start' | 'limit'> & { 
-        pageCount?: number
-        total?: number
-    }
+  pagination: StrapiResponseMetaPagination;
 };
 
 export type StrapiPaginatedResponse<T> = {
-    data: Array<T>
-    meta?: StrapiResponseMeta
+  data: Array<T>;
+  meta?: StrapiResponseMeta;
 };
 
+export type StrapiQueryParams = StringMap<string>;
 
-export type StrapiQueryParams = {
-    [key: string]: string
-};
-
-export type StrapiQueryParamsParsed = {
-    [key: string]: Primitive
-};
+export type StrapiQueryParamsParsed = StringMap<Primitive>;
 
 export type StrapiQueryParamsParsedOrderBy = string | Array<string>;
 
-type StrapiQueryParamsParsedFilterValue = Primitive | {
-    [key: string]: StrapiQueryParamsParsedFilterValue;
-};
+type StrapiQueryParamsParsedFilterValue =
+  | Primitive
+  | {
+      [key: string]: StrapiQueryParamsParsedFilterValue;
+    };
 
 export type StrapiQueryParamsParsedFilters = {
-    [key: string]: StrapiQueryParamsParsedFilterValue;
+  [key: string]: StrapiQueryParamsParsedFilterValue;
 };
