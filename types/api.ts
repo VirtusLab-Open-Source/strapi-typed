@@ -1,23 +1,32 @@
 import { StringMap, Primitive, TypeResult } from "./common";
+import { StrapiUser } from "./core";
 
 type SendStrapiContextFunction = (...args: unknown[]) => void;
 
 type ThrowStrapiContextFunction = (...args: unknown[]) => void;
 
 export type StrapiRequestContext<
-  TBody = StringMap<string | number>,
-  TQuery = StringMap<string | number>,
-  TParams = StringMap<string | number>
+  TBody extends {} = StringMap<string | number>,
+  TQuery extends {} = StringMap<string | number>,
+  TParams extends {} = StringMap<string | number>
 > = {
   request: StrapiRequest<TBody>;
   query: TQuery;
   params: TParams;
+  pagination: StrapiPagination;
+  sort: StringMap<string | number>;
+  state: StrapiRequestContextState;
+
   send: SendStrapiContextFunction;
   throw: ThrowStrapiContextFunction;
 };
 
 export type StrapiRequest<TBody extends {}> = {
   body?: TBody;
+};
+
+export type StrapiRequestContextState = {
+    user?: StrapiUser
 };
 
 export type StrapiPagination = {
