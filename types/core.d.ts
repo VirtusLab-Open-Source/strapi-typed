@@ -1,4 +1,4 @@
-import { HTTPMethod, StringMap, TypeResult } from "./common";
+import { HTTPMethod, Primitive, StringMap, TypeResult } from "./common";
 import { StrapiContentTypeSchema } from "./contentType";
 
 export interface IStrapi {
@@ -157,12 +157,11 @@ type WhereOperator<T = unknown> =
     | IsNullWhereOperator
     | IsNotNullWhereOperator;
 
-type WhereClause<TKeys extends string = string, TValues = string> = Record<
-    TKeys,
-    WhereOperator<TValues>
-> &
+type WhereClause<TKeys extends string = string, TValues = Primitive> = Partial<
+    Record<TKeys, WhereOperator<TValues>> &
     OrWhereOperator<Record<TKeys, WhereOperator<TValues>>> &
-    AndWhereOperator<Record<TKeys, WhereOperator<TValues>>>;
+    AndWhereOperator<Record<TKeys, WhereOperator<TValues>>>
+>;
 
 export type StrapiDBQueryArgs<TFields extends string = string, TData = unknown, TPopulate = string[]> = {
     where?: WhereClause<TFields>;
