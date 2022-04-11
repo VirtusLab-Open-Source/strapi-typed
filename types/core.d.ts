@@ -1,5 +1,6 @@
-import { HTTPMethod, StringMap, TypeResult } from "./common";
+import { HTTPMethod, Primitive, StringMap, TypeResult } from "./common";
 import { StrapiContentTypeSchema } from "./contentType";
+import { OnlyStrings } from "./utils";
 
 export interface IStrapi {
     config: StrapiConfigContainer;
@@ -94,7 +95,7 @@ export type StrapiDB = {
 };
 
 export type StrapiDBQuery<TValue, TKeys = keyof TValue> = {
-    findOne(args: number | string | StrapiDBQueryArgs): Promise<TValue>;
+    findOne(args: number | string | StrapiDBQueryArgs<TKeys>): Promise<TValue>;
     findMany(args?: StrapiDBQueryArgs<TKeys>): Promise<Array<TValue>>;
     findWithCount(
         args: StrapiDBQueryArgs<TKeys>
@@ -157,15 +158,14 @@ type WhereOperator<T = unknown> =
     | IsNullWhereOperator
     | IsNotNullWhereOperator;
 
-type WhereClause<TKeys extends string = string, TValues = string> = Record<
-    TKeys,
-    WhereOperator<TValues>
-> &
+type WhereClause<TKeys extends string = string, TValues = Primitive> = Partial<
+    Record<TKeys, WhereOperator<TValues>> &
     OrWhereOperator<Record<TKeys, WhereOperator<TValues>>> &
-    AndWhereOperator<Record<TKeys, WhereOperator<TValues>>>;
+    AndWhereOperator<Record<TKeys, WhereOperator<TValues>>>
+>;
 
 export type StrapiDBQueryArgs<TFields extends string = string, TData = unknown, TPopulate = string[]> = {
-    where?: WhereClause<TFields>;
+    where?: WhereClause<OnlyStrings<TFields>>;
     data?: TData;
     offset?: number;
     limit?: number;
