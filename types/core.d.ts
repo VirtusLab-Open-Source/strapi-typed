@@ -1,4 +1,5 @@
-import { HTTPMethod, Primitive, StringMap, TypeResult } from "./common";
+import { EventEmitter } from "events";
+import { HTTPMethod, Primitive, Id, StringMap, TypeResult } from "./common";
 import { StrapiContentTypeSchema } from "./contentType";
 import { OnlyStrings } from "./utils";
 
@@ -47,6 +48,8 @@ export interface IStrapi {
     bootstrap: Function;
     load: Function;
     startWebhooks: Function;
+    webhookRunner: StrapiWebhookRunner;
+    webhookStore: StrapiWebhookStore;
     reload: Function;
     runLifecyclesFunctions: Function;
 
@@ -55,12 +58,42 @@ export interface IStrapi {
     log: StrapiLog;
 }
 
+export type StrapiEvents = `${'entry' | 'media'}.${StrapiEventsCrudFlow}` | `entry.${StrapiEventsPublishFlow}`;
+type StrapiEventsCrudFlow = 'create' | 'update' | 'delete';
+type StrapiEventsPublishFlow = 'publish' | 'unpublish';
+
 export type StrapiService = any;
 export type StrapiController = any;
 export type StrapiMiddleware = Object;
 export type StrapiContentType<T extends StrapiContentTypeSchema> = T | Object;
 export type StrapiPolicy = Object;
 export type StrapiHook = Object;
+
+export type StrapiWebhook = {
+  id?: Id,
+  name: string,
+  type: string,
+  url: string,
+  headers: StringMap<string>,
+  events: StrapiEvents[],
+  enabled: boolean,
+} 
+export type StrapiWebhookRunner = {
+  config: StringMap<unknown>,
+  eventHub: EventEmitter,
+  listeners: Map<StrapiEvents, Function>,
+  logger: unknown,
+  queue: unknown,
+  webhooksMap: Map<StrapiEvents, StrapiWebhook[]>,
+};
+export type StrapiWebhookStore = {
+  createWebhook: (data: StrapiWebhook) => any
+  deleteWebhook: (id) => any
+  findWebhook: (id) => StrapiWebhook
+  findWebhooks: () => StrapiWebhook[]
+  updateWebhook: (data: StrapiWebhook) => any
+}
+
 export type StrapiApi = Object;
 export type StrapiAuth = Object;
 export type StrapiPlugin = {
