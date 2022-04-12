@@ -1,6 +1,6 @@
 {
   "name": "strapi-typed",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Strapi v4 - Types & utilities",
   "types": "./types/index.d.ts",
   "scripts": {
