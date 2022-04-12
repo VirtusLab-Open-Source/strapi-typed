@@ -1,6 +1,6 @@
 import { EventEmitter } from "events";
-import { HTTPMethod, Primitive, Id, StringMap, TypeResult } from "./common";
-import { StrapiContentTypeSchema } from "./contentType";
+import { HTTPMethod, Primitive, StringMap, TypeResult } from "./common";
+import { StrapiContentTypeFullSchema, StrapiContentTypeSchema } from "./contentType";
 import { OnlyStrings } from "./utils";
 
 export interface IStrapi {
@@ -23,7 +23,7 @@ export interface IStrapi {
     api(): StringMap<StrapiApi>;
     api(name: string): StrapiApi;
     auth(): StrapiAuth;
-    getModel<T>(uid: string): StrapiContentType<T>;
+    getModel<T>(uid: string): StrapiContentTypeFullSchema<keyof T>;
     query<T>(uid: string): StrapiDBQuery<T>;
     store(props: StrapiStoreQuery): StrapiStore;
     get components(): StringMap<any>;
@@ -65,7 +65,7 @@ type StrapiEventsPublishFlow = 'publish' | 'unpublish';
 export type StrapiService = any;
 export type StrapiController = any;
 export type StrapiMiddleware = Object;
-export type StrapiContentType<T extends StrapiContentTypeSchema> = T | Object;
+export type StrapiContentType<T extends StrapiContentTypeSchema> = T;
 export type StrapiPolicy = Object;
 export type StrapiHook = Object;
 
@@ -113,9 +113,9 @@ export type StrapiConfigContainer = StringMap<any> & {
 };
 
 export type StrapiStore = {
-    get: Function;
-    set: Function;
-    delete: Function;
+    get: <T extends string = string, U = unknown>({ key: T }) => U;
+    set: <T extends string = string, U = unknown>({ key: T, value: U }) => void;
+    delete: <T extends string = string>({ key: T }) => void;
 };
 
 export type StrapiStoreQuery = {
@@ -192,7 +192,7 @@ type WhereOperator<T = unknown> =
     | IsNotNullWhereOperator;
 
 type WhereClause<TKeys extends string = string, TValues = Primitive> = Partial<
-    Record<TKeys, WhereOperator<TValues>> &
+  Record<TKeys, WhereOperator<TValues>> &
     OrWhereOperator<Record<TKeys, WhereOperator<TValues>>> &
     AndWhereOperator<Record<TKeys, WhereOperator<TValues>>>
 >;
