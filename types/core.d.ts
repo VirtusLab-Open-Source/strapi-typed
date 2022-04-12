@@ -70,20 +70,20 @@ export type StrapiPolicy = Object;
 export type StrapiHook = Object;
 
 export type StrapiWebhook = {
-  id: Id,
+  id?: Id,
   name: string,
   type: string,
   url: string,
-  headers: Object,
+  headers: StringMap<string>,
   events: StrapiEvents[],
   enabled: boolean,
 } 
 export type StrapiWebhookRunner = {
-  config: StringMap<any>,
+  config: StringMap<unknown>,
   eventHub: EventEmitter,
   listeners: Map<StrapiEvents, Function>,
-  logger: any,
-  queue: any,
+  logger: unknown,
+  queue: unknown,
   webhooksMap: Map<StrapiEvents, StrapiWebhook[]>,
 };
 export type StrapiWebhookStore = {
