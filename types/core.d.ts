@@ -202,7 +202,11 @@ type PopulateClause<TKeys extends string = string> =
     Array<TKeys> | 
     boolean;
 
+
+type SelectClause<TKeys extends string = string> = TKeys | Array<TKeys> | '*';
+
 export type StrapiDBQueryArgs<TFields extends string = string, TData = unknown> = {
+    select?: SelectClause<OnlyStrings<TFields>>;
     where?: WhereClause<OnlyStrings<TFields>>;
     data?: TData;
     offset?: number;
