@@ -197,12 +197,17 @@ type WhereClause<TKeys extends string = string, TValues = Primitive> = Partial<
     AndWhereOperator<Record<TKeys, WhereOperator<TValues>>>
 >;
 
-export type StrapiDBQueryArgs<TFields extends string = string, TData = unknown, TPopulate = string[]> = {
+type PopulateClause<TKeys extends string = string> = 
+    Partial<Record<TKeys, boolean | Array<string> | StringMap<unknown>>> |
+    Array<TKeys> | 
+    boolean;
+
+export type StrapiDBQueryArgs<TFields extends string = string, TData = unknown> = {
     where?: WhereClause<OnlyStrings<TFields>>;
     data?: TData;
     offset?: number;
     limit?: number;
-    populate?: TPopulate;
+    populate?: PopulateClause<OnlyStrings<TFields>>;
     orderBy?: string | Array<unknown>;
 };
 
