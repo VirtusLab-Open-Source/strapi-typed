@@ -1,5 +1,6 @@
 import { StringMap, Primitive, TypeResult } from "./common";
 import { StrapiUser } from "./core";
+import { OnlyStrings } from "./utils";
 
 type SendStrapiContextFunction = (...args: unknown[]) => void;
 
@@ -59,12 +60,9 @@ export type StrapiQueryParamsParsed = StringMap<Primitive>;
 
 export type StrapiQueryParamsParsedOrderBy = string | Array<string>;
 
-type StrapiQueryParamsParsedFilterValue =
+type StrapiQueryParamsParsedFilterValue<TKeys extends string = string> =
   | Primitive
-  | {
-      [key: string]: StrapiQueryParamsParsedFilterValue;
-    };
+  | Partial<Record<TKeys, unknown>>;
 
-export type StrapiQueryParamsParsedFilters = {
-  [key: string]: StrapiQueryParamsParsedFilterValue;
-};
+export type StrapiQueryParamsParsedFilters<TValue, TKeys = keyof TValue> = 
+Partial<Record<OnlyStrings<TKeys>, StrapiQueryParamsParsedFilterValue<OnlyStrings<TKeys>>>>;
