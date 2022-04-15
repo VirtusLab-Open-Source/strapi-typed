@@ -1,5 +1,5 @@
 import { StringMap, Primitive, TypeResult } from "./common";
-import { StrapiUser } from "./core";
+import { PopulateClause, StrapiUser } from "./core";
 import { OnlyStrings } from "./utils";
 
 type SendStrapiContextFunction = (...args: unknown[]) => void;
@@ -29,6 +29,21 @@ export type StrapiRequest<TBody extends {}> = {
 export type StrapiRequestContextState = {
     user?: StrapiUser
 };
+
+export type StrapiRequestQuery<T, TFields = keyof T> = {
+  filters?: {
+    threadOf?: number | string | null;
+    [key: string]: any;
+  } & {};
+  populate?: StrapiRequestQueryPopulateClause<OnlyStrings<TFields>>;
+  sort?: StringMap<any>;
+  fields?: StrapiRequestQueryFieldsClause<OnlyStrings<TFields>>;
+  pagination?: StrapiPagination;
+}
+
+export type StrapiRequestQueryFieldsClause<TKeys extends string = string> = Array<TKeys> | '*';
+
+export type StrapiRequestQueryPopulateClause<TKeys extends string = string> = PopulateClause<TKeys>;
 
 export type StrapiPagination = {
   page?: number;
