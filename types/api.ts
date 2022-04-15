@@ -1,5 +1,6 @@
 import { StringMap, Primitive, TypeResult } from "./common";
-import { StrapiUser } from "./core";
+import { PopulateClause, StrapiUser } from "./core";
+import { OnlyStrings } from "./utils";
 
 type SendStrapiContextFunction = (...args: unknown[]) => void;
 
@@ -28,6 +29,21 @@ export type StrapiRequest<TBody extends {}> = {
 export type StrapiRequestContextState = {
     user?: StrapiUser
 };
+
+export type StrapiRequestQuery<T, TFields = keyof T> = {
+  filters?: {
+    threadOf?: number | string | null;
+    [key: string]: any;
+  } & {};
+  populate?: StrapiRequestQueryPopulateClause<OnlyStrings<TFields>>;
+  sort?: StringMap<any>;
+  fields?: StrapiRequestQueryFieldsClause<OnlyStrings<TFields>>;
+  pagination?: StrapiPagination;
+}
+
+export type StrapiRequestQueryFieldsClause<TKeys extends string = string> = Array<TKeys> | '*';
+
+export type StrapiRequestQueryPopulateClause<TKeys extends string = string> = PopulateClause<TKeys>;
 
 export type StrapiPagination = {
   page?: number;
@@ -59,12 +75,9 @@ export type StrapiQueryParamsParsed = StringMap<Primitive>;
 
 export type StrapiQueryParamsParsedOrderBy = string | Array<string>;
 
-type StrapiQueryParamsParsedFilterValue =
+type StrapiQueryParamsParsedFilterValue<TKeys extends string = string> =
   | Primitive
-  | {
-      [key: string]: StrapiQueryParamsParsedFilterValue;
-    };
+  | Partial<Record<TKeys, unknown>>;
 
-export type StrapiQueryParamsParsedFilters = {
-  [key: string]: StrapiQueryParamsParsedFilterValue;
-};
+export type StrapiQueryParamsParsedFilters<TValue, TKeys = keyof TValue> = 
+Partial<Record<OnlyStrings<TKeys>, StrapiQueryParamsParsedFilterValue<OnlyStrings<TKeys>>>>;
