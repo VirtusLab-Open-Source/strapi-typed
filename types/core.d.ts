@@ -236,7 +236,11 @@ export type StrapiRouteConfig = {
 
 export type StrapiAdminUser = any;
 
-export type StrapiUser = any;
+export type StrapiUser = {
+    id: Id;
+    email: string;
+    username: string;
+} & StringMap<unknown>;
 
 export type StrapiContext = {
     strapi: IStrapi;
