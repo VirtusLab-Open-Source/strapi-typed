@@ -232,6 +232,14 @@ export type StrapiRoute = {
 
 export type StrapiRouteConfig = {
     policies: Array<string>;
+    description?: string;
+    tag?: StrapiRouteConfigTag; 
+};
+
+export type StrapiRouteConfigTag = {
+    plugin: string;
+    name?: string;
+    actionType?: string;
 };
 
 export type StrapiAdminUser = any;
