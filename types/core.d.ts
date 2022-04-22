@@ -232,11 +232,23 @@ export type StrapiRoute = {
 
 export type StrapiRouteConfig = {
     policies: Array<string>;
+    description?: string;
+    tag?: StrapiRouteConfigTag; 
+};
+
+export type StrapiRouteConfigTag = {
+    plugin: string;
+    name?: string;
+    actionType?: string;
 };
 
 export type StrapiAdminUser = any;
 
-export type StrapiUser = any;
+export type StrapiUser = {
+    id: Id;
+    email: string;
+    username: string;
+} & StringMap<unknown>;
 
 export type StrapiContext = {
     strapi: IStrapi;
