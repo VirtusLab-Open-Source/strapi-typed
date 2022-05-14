@@ -1,4 +1,5 @@
 import { EventEmitter } from "events";
+import { StrapiRequestContext } from "./api";
 import { HTTPMethod, Primitive, StringMap, TypeResult } from "./common";
 import { StrapiContentTypeFullSchema, StrapiContentTypeSchema } from "./contentType";
 import { OnlyStrings } from "./utils";
@@ -63,7 +64,13 @@ type StrapiEventsCrudFlow = 'create' | 'update' | 'delete';
 type StrapiEventsPublishFlow = 'publish' | 'unpublish';
 
 export type StrapiService = any;
-export type StrapiController = any;
+export type StrapiController<
+    TResult = unknown, 
+    TBody extends {} = StringMap<string | number>,
+    TQuery extends {} = StringMap<string | number>,
+    TParams extends {} = StringMap<string | number>,
+    TContextExtra extends {} = {}
+> = (context: StrapiRequestContext<TBody, TQuery, TParams> & TContextExtra) => TResult
 export type StrapiMiddleware = Object;
 export type StrapiContentType<T extends StrapiContentTypeSchema> = T;
 export type StrapiPolicy = Object;
