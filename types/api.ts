@@ -6,6 +6,8 @@ type SendStrapiContextFunction = (...args: unknown[]) => void;
 
 type ThrowStrapiContextFunction = (...args: unknown[]) => void;
 
+type StrapiHTTPErrorConstructor<T = StringMap<unknown>> = (message?: string, details?: T) => any
+
 export type StrapiRequestContext<
   TBody extends {} = StringMap<string | number>,
   TQuery extends {} = StringMap<string | number>,
@@ -20,6 +22,14 @@ export type StrapiRequestContext<
 
   send: SendStrapiContextFunction;
   throw: ThrowStrapiContextFunction;
+
+  // @see {https://github.com/jshttp/http-errors#list-of-all-constructors}
+  notFound: StrapiHTTPErrorConstructor;
+  badRequest: StrapiHTTPErrorConstructor;
+  unauthorized: StrapiHTTPErrorConstructor;
+  methodNotAllowed: StrapiHTTPErrorConstructor;
+  internalServerError: StrapiHTTPErrorConstructor;
+  notImplemented: StrapiHTTPErrorConstructor;
 };
 
 export type StrapiRequest<TBody extends {}> = {
