@@ -200,8 +200,8 @@ type WhereOperator<T = unknown> =
 
 type WhereClause<TKeys extends string = string, TValues = Primitive> = Partial<
   Record<TKeys, WhereOperator<TValues>> &
-    OrWhereOperator<Record<TKeys, WhereOperator<TValues>>> &
-    AndWhereOperator<Record<TKeys, WhereOperator<TValues>>>
+    OrWhereOperator<Partial<Record<TKeys, WhereOperator<TValues>>>> &
+    AndWhereOperator<Partial<Record<TKeys, WhereOperator<TValues>>>>
 >;
 
 type PopulateClause<TKeys extends string = string> = 
