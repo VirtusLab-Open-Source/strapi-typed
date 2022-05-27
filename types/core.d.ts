@@ -141,11 +141,11 @@ export type StrapiDBQuery<TValue, TKeys = keyof TValue> = {
         args: StrapiDBQueryArgs<TKeys>
     ): Promise<[items: Array<TValue>, count: number]>;
     create(args: StrapiDBQueryArgs<TKeys>): Promise<TValue>;
-    createMany(args: StrapiDBQueryArgs<TKeys>): Promise<Array<TValue>>;
+    createMany(args: StrapiDBQueryArgs<TKeys>): Promise<StrapiDBBulkActionResponse>;
     update(args: StrapiDBQueryArgs<TKeys>): Promise<TValue>;
-    updateMany(args: StrapiDBQueryArgs<TKeys>): Promise<Array<TValue>>;
+    updateMany(args: StrapiDBQueryArgs<TKeys>): Promise<StrapiDBBulkActionResponse>;
     delete(args: StrapiDBQueryArgs<TKeys>): Promise<TValue>;
-    deleteMany(args: StrapiDBQueryArgs<TKeys>): Promise<Array<TValue>>;
+    deleteMany(args: StrapiDBQueryArgs<TKeys>): Promise<StrapiDBBulkActionResponse>;
     count(args?: StrapiDBQueryArgs<TKeys>): number;
 };
 
@@ -220,6 +220,10 @@ export type StrapiDBQueryArgs<TFields extends string = string, TData = unknown> 
     limit?: number;
     populate?: PopulateClause<OnlyStrings<TFields>>;
     orderBy?: string | Array<unknown>;
+};
+
+export type StrapiDBBulkActionResponse = {
+    count: number;
 };
 
 export type StrapiAdmin = any;
