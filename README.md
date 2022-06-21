@@ -26,10 +26,24 @@ A developers goodie for [Strapi Headless CMS](https://github.com/strapi/strapi) 
 yarn add -D strapi-typed@latest
 ```
 
-and then use
+After install typings should be automatically available if you import from `@strapi/strapi`.
+
+If you want to use are internal utility types then use
 
 ```typescript
-import { IStrapi } from 'strapi-typed';
+import { StringMap, OnlyStrings } from "@strapi/typed";
+```
+
+In few place plugin creator or Strapi consumer can extend couple of interfaces to add custom typings
+
+For example
+
+```typescript
+declare module '@strapi/strapi' {
+  export interface IStrapiRequestQueryFiltersExtra {
+    threadOf?: number | string | null;
+  }
+}
 ```
 
 Enjoy 🎉
