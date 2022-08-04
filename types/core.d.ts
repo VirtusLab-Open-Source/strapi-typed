@@ -166,7 +166,6 @@ type ContainsCaseInsensitiveWhereOperator = { $containsi: string };
 type NotContainsCaseInsensitiveWhereOperator = { $notContainsi: string };
 type StartsWithWhereOperator = { $startsWith: string };
 type EndsWithWhereOperator = { $endsWith: string };
-type EndsWithWhereOperator = { $endsWith: string };
 type IsNullWhereOperator = { $null: boolean };
 type IsNotNullWhereOperator = { $notNull: boolean };
 type NotWhereOperator<TKey extends string, TValue> = {
@@ -174,8 +173,8 @@ type NotWhereOperator<TKey extends string, TValue> = {
         [TKey]: [TValue];
     };
 };
-type AndWhereOperator<T> = { $and: T[] };
-type OrWhereOperator<T> = { $or: T[] };
+type AndWhereOperator<T> = { $and: Partial<T>[] };
+type OrWhereOperator<T> = { $or: Partial<T>[] };
 
 type WhereOperator<T = unknown> =
     | T
