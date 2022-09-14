@@ -1,4 +1,6 @@
 import { EventEmitter } from "events";
+import React from "react";
+import { MessageDescriptor } from "react-intl";
 import { StrapiRequestContext } from "./api";
 import { HTTPMethod, Primitive, StringMap, TypeResult } from "./common";
 import { StrapiContentTypeFullSchema, StrapiContentTypeSchema } from "./contentType";
@@ -57,6 +59,8 @@ export interface IStrapi {
     db: StrapiDB;
     admin: StrapiAdmin;
     log: StrapiLog;
+
+    customFields: StrapiServerCustomFields;
 }
 
 export type StrapiEvents = `${'entry' | 'media'}.${StrapiEventsCrudFlow}` | `entry.${StrapiEventsPublishFlow}`;
@@ -227,10 +231,94 @@ export type StrapiDBBulkActionResponse = {
 
 export type StrapiAdmin = any;
 
+export type StrapiAdminInstance = {
+    addMenuLink: (input: ToBeFixed) => ToBeFixed
+    createSettingSection: (...input: Array<ToBeFixed>) => ToBeFixed
+    addReducers: (input: ToBeFixed) => ToBeFixed
+    registerPlugin: (input: ToBeFixed) => ToBeFixed
+    customFields: StrapiAdminCustomFields
+}
+
 export type StrapiLog = {
     log: Function;
     error: Function;
     warn: Function;
+};
+
+export type AllowedCustomFieldType =
+    | "biginteger"
+    | "boolean"
+    | "date"
+    | "datetime"
+    | "decimal"
+    | "email"
+    | "enumeration"
+    | "float"
+    | "integer"
+    | "json"
+    | "password"
+    | "richtext"
+    | "string"
+    | "text"
+    | "time"
+    | "timestamp"
+    | "uid";
+
+export type StrapiServerCustomFieldRegisterInput = {
+    name: string;
+    plugin?: string;
+    type: AllowedCustomFieldType;
+};
+
+export type StrapiServerCustomFields = {
+    register: (input: StrapiServerCustomFieldRegisterInput) => void;
+};
+
+export export type CustomFieldInputAttribute = {
+    type: string;
+    customField: string;
+}
+
+export export type CustomFieldInputOption = {
+    key: string;
+    value: string;
+}
+
+export export type CustomFieldInputProps = {
+    attribute: CustomFieldInputAttribute;
+    contentTypeUID: string;
+    multiple: boolean;
+    withDefaultValue: boolean;
+    description?: any;
+    disabled: boolean;
+    intlLabel: MessageDescriptor;
+    labelAction: string;
+    error?: ToBeFixed;
+    name: string;
+    options: CustomFieldInputOption[];
+    required: boolean;
+    placeholder?: any;
+    type: string;
+    value?: unknown;
+    onChange?: React.EventHandler<ToBeDefined>
+}
+
+export type StrapiAdminCustomFieldRegisterInput = {
+    pluginId?: string;
+    icon?: React.ComponentType;
+    intlLabel: MessageDescriptor;
+    intlDescription: MessageDescriptor;
+    // TODO: update once implementation doesn't require async components read
+    components: { Input: () => Promise<ToBeDefined> };
+    options: {
+        base: Array<ToBeDefined>;
+        advanced: Array<ToBeDefined>;
+        validator: (...args: Array<ToBeDefined>) => Record<string, ToBeDefined>
+    },
+} & StrapiServerCustomFieldRegisterInput;
+
+export type StrapiAdminCustomFields = {
+    register: (input: StrapiAdminCustomFieldRegisterInput) => void;
 };
 
 export type StrapiRoute = {

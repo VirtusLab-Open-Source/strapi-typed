@@ -12,7 +12,9 @@
   },
   "dependencies": {
     "@strapi/plugin-graphql": "^4.3.2",
-    "@strapi/utils": "^4.3.2"
+    "@strapi/utils": "^4.3.2",
+    "@types/react": "^18.0.18",
+    "@types/react-intl": "^3.0.0"
   },
   "devDependencies": {
     "typescript": "^4.6.2"
