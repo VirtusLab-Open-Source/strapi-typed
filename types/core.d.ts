@@ -289,7 +289,7 @@ export export type CustomFieldInputProps = {
     contentTypeUID: string;
     multiple: boolean;
     withDefaultValue: boolean;
-    description?: any;
+    description?: string;
     disabled: boolean;
     intlLabel: MessageDescriptor;
     labelAction: string;
@@ -297,7 +297,7 @@ export export type CustomFieldInputProps = {
     name: string;
     options: CustomFieldInputOption[];
     required: boolean;
-    placeholder?: any;
+    placeholder?: string;
     type: string;
     value?: unknown;
     onChange?: React.EventHandler<ToBeDefined>
