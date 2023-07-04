@@ -59,6 +59,7 @@ export interface IStrapi {
     db: StrapiDB;
     admin: StrapiAdmin;
     log: StrapiLog;
+    cron: StrapiCron;
 
     customFields: StrapiServerCustomFields;
 }
@@ -243,6 +244,12 @@ export type StrapiLog = {
     log: Function;
     error: Function;
     warn: Function;
+};
+
+export type StrapiCron = {
+    add: Function;
+    remove: Function;
+    jobs: any[];
 };
 
 export type AllowedCustomFieldType =
