@@ -1,6 +1,6 @@
 {
   "name": "strapi-typed",
-  "version": "1.0.18",
+  "version": "1.0.19",
   "description": "Strapi v4 - Types & utilities",
   "types": "./types/index.d.ts",
   "scripts": {
@@ -11,8 +11,8 @@
     "url": "https://github.com/VirtusLab-Open-Source/strapi-typed"
   },
   "dependencies": {
-    "@strapi/plugin-graphql": "^4.20.0",
-    "@strapi/utils": "^4.20.0",
+    "@strapi/plugin-graphql": "^4.24.4",
+    "@strapi/utils": "^4.24.4",
     "@types/react": "^18.0.28",
     "@types/react-intl": "^3.0.0"
   },
@@ -20,7 +20,7 @@
     "typescript": "5.2.2"
   },
   "peerDependencies": {
-    "@strapi/strapi": "^4.0.0"
+    "@strapi/strapi": "^4.24.4"
   },
   "author": {
     "name": "VirtusLab",
